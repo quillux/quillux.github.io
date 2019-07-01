@@ -2,14 +2,14 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="../search-experiements/styles/search-experiment.css?v4" media="screen" />
+<link rel="stylesheet" href="../search-experiments/styles/search-experiment.css?v4" media="screen" />
 <script src="../js/jquery-1.12.4.min.js"></script>
 <script type="application/javascript">
 // initialize scripts
 var url = '';
 
 </script>
-<script src="../search-experiements/js/search-json-v3b.js"></script>
+<script src="../search-experiments/js/search-json-v3b.js"></script>
 
 </head>
 <body>
@@ -29,7 +29,6 @@ var url = '';
 
        var urlPrefix = "https://www.quill.com/search?x=0&y=0&ajx=1&keywords=";
        var searchTerms = "copy+paper";
-
 
        var jsonContent = new Object();
 
@@ -87,7 +86,7 @@ function parseTheApi(myJson) {
           productResults += '<div class="search-grid-block">';
 
           // compare
-            productResults += '<span class="compareCheckBlock"><input type="checkbox" id="compare' + b + '" class="compareCheck"><label for="compare' + b + '">Compare</span><br />';          
+            productResults += '<span class="compareCheckBlock"><input type="checkbox" id="compare' + b + '" class="compareCheck"><label for="compare' + b + '">Compare</label></span><br />';
 
           // image
             productResults += '<a class="imgLink" href="https://www.quill.com' + prodObj.products[b].prodLink + '">';
@@ -114,10 +113,6 @@ function parseTheApi(myJson) {
             }
 
             productResults += '</span>';
-
-
-
-
 
             // pricing display
             // start table
