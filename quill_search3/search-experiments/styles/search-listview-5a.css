@@ -197,6 +197,22 @@ ul ul li.link {
 }
 
 
+.reorder {
+  display: block;
+  margin-left: -200px;
+  padding-left: 200px;
+}
+
+.promoStrip {
+  display: block;
+  margin: 0 0 20px 0;
+  padding: 10px;
+  width: 75%;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 /*------- product results ------*/
 #divResults {
   display: inline-block;

@@ -160,13 +160,16 @@ ul ul li.link {
 .reorder {
   display: block;
   margin-left: -200px;
-  padding-left: 200px;
-  width: 100%;
+  padding-left: 200px;  
 }
 
 .promoStrip {
   display: block;
-  width: 100%;
+  margin: 0 0 20px 0;
+  padding: 10px;
+  width: 75%;
+  background-color: #fff;
+  border-radius: 10px;
   overflow: hidden;
 }
 
