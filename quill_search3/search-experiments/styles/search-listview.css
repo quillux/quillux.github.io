@@ -552,18 +552,19 @@ color: #0079bc;
   display: inline-block;
   height: 25px;
   box-sizing: border-box;
+  padding-top: 5px;
 }
 
 .qtyCol {
   width: 50px;
   font-size: 11px;
-  vertical-align: top;
+  vertical-align: middle;
   padding: 3px 0;
 }
 
 .savingsCol {
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
   font-size: 9px;
   padding: 3px 10px 3px 0;
 }

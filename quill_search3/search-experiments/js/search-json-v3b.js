@@ -272,7 +272,7 @@ function scrapePage(url) {
                       var priceRows = "";
 
                        // tier starts at 1
-                       var topTier = "1+";
+                       var topTier = "1";
 
                        priceRows += '{\n';
                                priceRows += '"tierNum":"' + topTier + '",\n';

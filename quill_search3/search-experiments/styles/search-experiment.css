@@ -460,7 +460,7 @@ ul ul li.link {
   color: #a9a9a9;
   display: inline-block;
   height: 25px;
-  padding-top: 0;
+  padding-top: 5px;
   box-sizing: border-box;
 }
 
@@ -469,9 +469,9 @@ ul ul li.link {
 }
 
 .qtyCol {
-  width: 50px;
+  width: 60px;
   font-size: 11px;
-  vertical-align: top;
+  vertical-align: middle;
   padding: 3px 0;
 }
 
@@ -481,7 +481,7 @@ ul ul li.link {
 
 .savingsCol {
   text-align: right;
-  vertical-align: top;
+  vertical-align: middle;
   font-size: 10px;
   color: #cccccc;
   padding: 5px 10px 3px 0;

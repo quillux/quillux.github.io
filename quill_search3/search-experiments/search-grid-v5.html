@@ -150,7 +150,7 @@ function parseTheApi(myJson) {
             // table header content
 
             // Uom
-            productResults += '<span class="uomText">Price per ' + prodObj.products[b].uomTxt + '<br />when you buy</span>';
+            productResults += '<span class="uomText">Price when you buy</span>';
 
             // promo flag
             if (prodObj.products[b].promoFlags.promoFlagPath != "") {
@@ -196,16 +196,19 @@ function parseTheApi(myJson) {
               // get the qty number
               var qtyPrice = prodObj.products[b].priceTiers[j].tierNum;
 
-              // add + only if not top tier
-              if (prodObj.products[b].priceTiers.length != 1) {
-                qtyPrice = qtyPrice + '+';
-              }
 
+              // add + only if not top tier
+              if (qtyPrice != "1") {
+                qtyPrice = qtyPrice + '+';
+              } else {
+                qtyPrice = qtyPrice + ' ' + prodObj.products[b].uomTxt;
+              }
               // get the was price
               var showWasPrice = prodObj.products[b].priceTiers[j].tierWasPrice;
 
               // get the qty price
               var topPrice = prodObj.products[b].priceTiers[j].tierPrice;
+
 
               // embolden and redify the price for the top tier
               if (j == 0) {
