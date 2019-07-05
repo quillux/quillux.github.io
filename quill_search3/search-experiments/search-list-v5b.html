@@ -423,11 +423,13 @@ var getResults = $.get( loadPath, function( results ) {
                      var thisWasStory = $(".txtSaveStory", this.innerHTML).remove();
                      var thisWasTop = 'Was <span class="strike darkGray">' + $(".strike", this.innerHTML).remove().text() + '</span><br />';
                      var thisWasSavings = "";
-                     //var thisWasSavings = '<span class="green txtBold"> Save up to ' + $(".txtSavedPrice", this.innerHTML).remove().text() + '</span>';
 
                       // load the result
                       thisWasPrice = thisWasTop + thisWasSavings + "<!-- thiswasprice row " + i + "-->";
                 }
+
+                var savedAmt = checkThis($(".savingStory .green", innerRow).text());
+
 
                // get qty Limit quantitylmt
                thisQtyLmt = checkThis($(".quantitylmt", innerRow).html());
@@ -561,6 +563,12 @@ var getResults = $.get( loadPath, function( results ) {
                resultRows += '<tr>';
                  resultRows += '<th class="UOM" colspan="3">';
                  resultRows += '<span class="uomText">Price when you buy</span>';
+                 if (savedAmt.length > 0) {
+                   // replace the dumb non-breaking space
+                   savedText = savedAmt.replace("\u00A0", " ");
+                   resultRows += '<span class="greenSave">' + savedText + '</span>';
+                 }
+
                  resultRows += '</th>';
                resultRows += '</tr>'
             resultRows += tableRows;

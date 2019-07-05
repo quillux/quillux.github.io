@@ -209,7 +209,7 @@ ul ul li.link {
   padding: 10px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);  
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
   overflow: hidden;
 }
 
@@ -550,8 +550,9 @@ color: #0079bc;
 .greenSave {
   display: block;
   float: right;
+  font-size: 12px;
   text-align: right;
-  width: 90px;
+  width: 100px;
   color: #009900;
 }
 
