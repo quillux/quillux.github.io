@@ -157,6 +157,19 @@ ul ul li.link {
   text-indent: -18px;
 }
 
+.reorder {
+  display: block;
+  margin-left: -200px;
+  padding-left: 200px;
+  width: 100%;
+}
+
+.promoStrip {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
 #jsonResults {
     margin-left: -200px;
     padding-left: 200px;
