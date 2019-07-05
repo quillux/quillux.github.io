@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="../search-experiments/styles/search-experiment.css?v4" media="screen" />
+<link rel="stylesheet" href="../search-experiments/styles/search-experiment.css?v6" media="screen" />
 <script src="../js/jquery-1.12.4.min.js"></script>
 <script type="application/javascript">
 // initialize scripts
@@ -13,24 +13,41 @@ var url = '';
 
 </head>
 <body>
+<header>
+  <img src="" />
   <div id="newSearchBlock">
-    <label class="new_search" for="newSearch">New Search: </label><input type="text" id="newSearch" />
+    <label class="new_search" for="newSearch">Search: </label><input type="text" id="newSearch" />
     <button id="doNewSearch" class="btnNewSearch">Search</button>
   </div>
-<br />
+</header>
 
-<div id="jsonResults">
+<div class="pageContent">
+
+
+
+  <h2 id="displaySearchTerms">Search Results for "Copy Paper"</h2>
+  <div id="filtersCol">
+    <h4>Filter the results</h4>
+  </div>
+  <div id="jsonResults">
+
+  </div>
+  <br clear="all" />
+</div>
+<footer>
+<div class="footerContent">
 
 </div>
+
+</footer>
+
+
 </body>
   <script type="text/javascript">
 
-    // call from live server
-
-       var urlPrefix = "https://www.quill.com/search?x=0&y=0&ajx=1&keywords=";
-       var searchTerms = "copy+paper";
 
        var jsonContent = new Object();
+       var filtersRes;
 
 
 // add function to set term to be something from searchbox or querystring
@@ -52,12 +69,19 @@ doSearchKey.addEventListener("keyup", function (e) {
 function getSearch (event) {
   sTerms = document.getElementById("newSearch").value;
   console.log("terms: ]" + sTerms + "[");
-  searchTerms = encodeURI(sTerms);
-  url = urlPrefix + searchTerms;
 
+  var urlPrefix = "../search-experiments/data-src1/";
+
+    //  for files with spaces replace with dash
+  searchTerms = sTerms.replace(" ", "-");
+    // encoding was only needed for searching live server
+    // searchTerms = encodeURI(sTerms);
+
+  url = urlPrefix + searchTerms + ".html";
 
   // gets the resutls
   scrapePage(url);
+  $("#displaySearchTerms").text("Search Results for \"" + sTerms + "\"");
   return false;
 }
 
@@ -66,11 +90,12 @@ function getSearch (event) {
 // this ensures the API data has been fully received
 function parseTheApi(myJson) {
 
+
       if ((myJson != "") && (myJson != undefined)) {
 
         //console.log("json: " + JSON.stringify(myJson));
 
-        console.log(myJson);
+        // console.log(myJson);
         $("#jsonResults").html(myJson);
 
         var prodObj = JSON.parse(myJson);
@@ -124,7 +149,35 @@ function parseTheApi(myJson) {
 
             // promo flag
             if (prodObj.products[b].promoFlags.promoFlagPath != "") {
-               productResults += '<div class="promoFlag"><img src="' + prodObj.products[b].promoFlags.promoFlagPath + '"></div>';
+
+              var promoImgPath = prodObj.products[b].promoFlags.promoFlagPath;
+              var promoClass, promoText;
+
+              if(promoImgPath.indexOf("sale") > 0) {
+                 promoClass = "saleFlag";
+                 promoText = "Sale";
+              } else if(promoImgPath.indexOf("bestprice") > 0) {
+                promoClass = "bestPriceFlag";
+                promoText = "Top Seller<br />Best Price";
+              } else if(promoImgPath.indexOf("event2") > 0) {
+                promoClass = "sale4Flag";
+                promoText = "$4 Sale";
+              } else if(promoImgPath.indexOf("closeout") > 0) {
+                promoClass = "clearanceFlag";
+                promoText = "Clearance";
+              } else if(promoImgPath.indexOf("free") > 0) {
+                promoClass = "specialFlag";
+                promoText = "Special Offer";
+              } else if(promoImgPath.indexOf("quillplus") > 0) {
+                promoClass = "qpFlag";
+                promoText = "Quill<b>PLUS</b>";
+              } else if(promoImgPath.indexOf("private") > 0) {
+                promoClass = "privateFlag";
+                promoText = "Private Sale";
+              }
+
+
+               productResults += '<div class="promoFlag ' + promoClass + '">' + promoText + '</div>';
             }
 
             // need to get ink toner flags
@@ -135,6 +188,7 @@ function parseTheApi(myJson) {
             // price tiers
             for(j=0; j < prodObj.products[b].priceTiers.length; j++) {
 
+              // get the qty number
               var qtyPrice = prodObj.products[b].priceTiers[j].tierNum;
 
               // add + only if not top tier
@@ -142,17 +196,22 @@ function parseTheApi(myJson) {
                 qtyPrice = qtyPrice + '+';
               }
 
+              // get the was price
+              var showWasPrice = prodObj.products[b].priceTiers[j].tierWasPrice;
+
+              // get the qty price
               var topPrice = prodObj.products[b].priceTiers[j].tierPrice;
 
               // embolden and redify the price for the top tier
               if (j == 0) {
                 qtyPrice = '<span class="topQty">' + qtyPrice + '</span>';
+                showWasPrice = '<span class="topWas">' + showWasPrice + '</span>';
                 topPrice = '<span class="topPrice">' + topPrice + '</span>';
               }
 
               productResults += '<tr class="rowPrice">';
               productResults += '<td class="qtyCol">' + qtyPrice + '</td>';
-              productResults += '<td class="savingsCol"</td>';
+              productResults += '<td class="savingsCol">' + showWasPrice + '</td>';
               productResults += '<td class="bestPrice">' + topPrice + '</td>';
               productResults += '</tr>';
             }
@@ -165,12 +224,11 @@ function parseTheApi(myJson) {
             }
             productResults += '</div>';
 
-
-
-
             // add to cart line
             productResults += '<label class="qtyLabel" for="qty' + prodObj.products[b].skuID + '">Qty:</label><br /><input class="qtyField" id="qty' + prodObj.products[b].skuID + '" sku="' + prodObj.products[b].skuID + '" value="1"> <button class="addToCart" sku="' + prodObj.products[b].skuID + '">Add to Cart</button>';
 
+            // favorites
+            productResults += '<span class="favListIcon formLabel favListBtn scTrack" title="Save to your favorites list." sctype="scLink" scvalue="savetofavorites" id="ATL_[SKUID]" data-url="/mylist/CreateUpdateFavorite?listtype=1" onclick="Utilities.ShowFavoriteList(this, false, false);" data-sku="[SKUID]" data-printnumber="{itemnumber}" data-description=""></span>';
 
             var checkQuick = prodObj.products[b].quickShip;
             if (checkQuick == "y") {
@@ -190,14 +248,82 @@ function parseTheApi(myJson) {
         }
 
         $("#jsonResults").html(productResults);
+        // console.log("priceT length: " + prodObj.products[0].priceTiers.length);
 
-        console.log("priceT length: " + prodObj.products[0].priceTiers.length);
 
 
      } else {
         $("#jsonResults").html("Use the search box above to try another search");
      }
+
+
 }
+
+// this makes headings sticky
+// it is invoked in the js file in the done section for the scrapepage
+var stickyHeaders = (function() {
+
+  var $window = $(window),
+      $stickies;
+
+  var load = function(stickies) {
+
+    if (typeof stickies === "object" && stickies instanceof jQuery && stickies.length > 0) {
+
+      $stickies = stickies.each(function() {
+
+        var $thisSticky = $(this).wrap('<div class="followWrap" />');
+
+        $thisSticky
+            .data('originalPosition', $thisSticky.offset().top)
+            .data('originalHeight', $thisSticky.outerHeight())
+              .parent()
+              .height($thisSticky.outerHeight());
+      });
+
+      $window.off("scroll.stickies").on("scroll.stickies", function() {
+		  _whenScrolling();
+      });
+    }
+  };
+
+  var _whenScrolling = function() {
+
+    $stickies.each(function(i) {
+
+      var $thisSticky = $(this),
+          $stickyPosition = $thisSticky.data('originalPosition');
+
+      if ($stickyPosition <= $window.scrollTop()) {
+
+        var $nextSticky = $stickies.eq(i + 1),
+            $nextStickyPosition = $nextSticky.data('originalPosition') - $thisSticky.data('originalHeight');
+
+        $thisSticky.addClass("fixed");
+
+        if ($nextSticky.length > 0 && $thisSticky.offset().top >= $nextStickyPosition) {
+
+          $thisSticky.addClass("absolute").css("top", $nextStickyPosition);
+        }
+
+      } else {
+
+        var $prevSticky = $stickies.eq(i - 1);
+
+        $thisSticky.removeClass("fixed");
+
+        if ($prevSticky.length > 0 && $window.scrollTop() <= $thisSticky.data('originalPosition') - $thisSticky.data('originalHeight')) {
+
+          $prevSticky.removeClass("absolute").removeAttr("style");
+        }
+      }
+    });
+  };
+
+  return {
+    load: load
+  };
+})();
 
 
    </script>

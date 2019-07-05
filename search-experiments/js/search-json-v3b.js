@@ -10,6 +10,9 @@ ensure the results have been returned
 
 The parsetheApi needs to be implemented in the file the scrape page function is called
 
+added code to make the prototype work locally with no CORS restrictions
+now pulls data from local data-src1 directory
+
 */
 
 function getQVar(variable)
@@ -25,17 +28,30 @@ function getQVar(variable)
 
 
 var searchString = getQVar("keywords");
-
+var localData;
 
 if((url == '') && (!searchString)) {
-  url = "https://www.quill.com/search?x=0&y=0&keywords=copy+paper&ajx=1";
+  url = "../search-experiments/data-src1/copy-paper.html";
+
   scrapePage(url);
+
 } else if (searchString != '') {
-  url = "https://www.quill.com/search?x=0&y=0&keywords=" + getQVar("keywords") + "&ajx=1";
-  scrapePage(url);
+  //url = "https://www.quill.com/search?x=0&y=0&keywords=" + getQVar("keywords") + "&ajx=1";
+
+   if (searchString === "copy+paper") {
+      url = "../search-experiments/data-src1/copy-paper.html";
+   } else if (searchString === "laptops") {
+      url = "../search-experiments/data-src1/laptops.html";
+   }
+
+   scrapePage(url);
+
 } else {
   // main page is making the call
+   url = "../search-experiments/data-src1/copy-paper.html";
+   scrapePage(url);
 }
+
 
 function scrapePage(url) {
 
@@ -123,7 +139,7 @@ function scrapePage(url) {
                  // get sku bullets
                  var bulletDesc = $(".skuBrowseBullet", innerRow).each(function (v, bullets) {
                      //console.log("bullets: " + bullets);
-                     itemDesc += '"bullet' + v + '" : "' + checkThis($(bullets).text()) + '",\n'
+                     itemDesc += '"bullet' + v + '" : "' + checkThis($(bullets).text().replace(/[\n\r]/g, "")) + '",\n'
                   });
 
                  itemDesc = itemDesc.slice(0,-2) + '\n';
@@ -314,15 +330,15 @@ function scrapePage(url) {
                        sCount--;
                        pCount--;
 
-                       // put everything into a new table
+                       // put everything into a new array
                        if (z == (qtyTier2.length-1)) {
                         priceTier2[z] = priceTier2[z];
                        }
 
                        if ((z == (qtyTier2.length-1)) && (wasPrice != "")) {
-                          saveTier2[z] = wasPrice;
+                          saveTier2[z] = "was <span class='strike'>" + wasPrice + "</span>";
                        } else if (saveTier2[z] != "") {
-                          saveTier2[z] = saveTier2[z];
+                          saveTier2[z] = "save " +saveTier2[z];
                        }
 
                        priceRows += '{\n';
@@ -376,7 +392,7 @@ function scrapePage(url) {
        // console.log("srchResLgth: " + i);
 
 
-      });
+     }); // end get search results
 
     // remove the trailing space and comma
     resultRows = resultRows.slice(0, -2);
@@ -388,6 +404,20 @@ function scrapePage(url) {
     // the $.get is asynchronous and there is just enough delay that the return value is empty
     jsonContent = resultRows;
    // console.log("jsonCont1: " + jsonContent);
+
+   // get the filters
+   filtersRes = "<h4>Filter the Results</h4>";
+
+    // this grabs the whole column of filters
+   var filterBlob = $("#GuidedNavFilters", results).html();
+
+   //rewrite the image path for the quick ship filter
+    var quickShipRep = filterBlob.replace('/Images/Quill/Shared/QuickShip.png', '../images/icons/quick-ship-icn-gray1.svg');
+    filtersRes += quickShipRep;
+   //console.log("filters: " + filtersRes);
+
+
+
 
 })
 .done(function(results) {
@@ -405,16 +435,27 @@ function scrapePage(url) {
       } else {
 
           parseTheApi(jsonContent);
+
+          $("#filtersCol").html(filtersRes);
+
+          $(function() {
+            stickyHeaders.load($(".NewSearchFilterLable"));
+          });
+
           //document.write(jsonContent);
           //document.close();
 
       }
 
 
-
+      console.log(results);
 
 })
 .fail(function(results) {
+
+   // lets get local files
+
+
     // tell me what went wrong
      console.log(results);
      console.log(results.status);
