@@ -555,6 +555,21 @@ ul ul li.link {
 }
 
 
+.favListIcon {
+  background: url(https://www.quill.com/Images/Quill/shared/lists/sprites.png?v=kv3VMncQ7xCs19gEYGFxlw) no-repeat no-repeat -61px -1440px;
+  width: 23px;
+  height: 30px;
+  display: inline-block;
+  cursor: pointer;
+  float: right;
+  margin: 10px 15px 0 0;
+}
+
+.favListIcon:hover {
+  background: url(https://www.quill.com/Images/Quill/shared/lists/sprites.png?v=kv3VMncQ7xCs19gEYGFxlw) no-repeat no-repeat -61px -1479px;
+}
+
+
 footer {
   clear: both;
   width: 100%;
