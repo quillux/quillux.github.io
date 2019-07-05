@@ -41,7 +41,7 @@
   <div class="reorder">
     <div class="promoStrip">
       <b>Time to Reorder</b>
-      <img id="promo-img" src="../images/reorder-strip.png" />
+      <img id="promo-img" src="../images/copy-paper-promo.png" />
     </div>
   </div>
 
@@ -166,13 +166,13 @@ if (getQVar("keywords") != "") {
   searchTerms = getQVar("keywords");
   $("#displayGrid").attr("keywords", searchTerms);
 
+
   var promoImgPath = "../images/" + searchTerms + "-promo.png";
-  $("#promo-img").attr("src",promoImgPath);
+  console.log("path1: " + promoPath);
+    $("#promo-img").attr("src",promoImgPath);
 
   var displayTerms = searchTerms.replace("-", " ");
   $("#displaySearchTerms").text("Search Results for \"" + displayTerms + "\"");
-
-
 
 }
 
@@ -213,6 +213,10 @@ function getSearch (event) {
   scrapePage(url);
   $("#displaySearchTerms").text("Search Results for \"" + sTerms + "\"");
   $("#displayGrid").attr("keywords", searchTerms);
+  var promoPath = "../images/" + searchTerms + "-promo.png";
+  console.log("path: " + promoPath);
+  $("#promo-img").attr("src",promoPath);
+
   return false;
 }
 

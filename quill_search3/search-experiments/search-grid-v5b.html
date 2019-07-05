@@ -90,6 +90,8 @@ function getSearch (event) {
   scrapePage(url);
   $("#displaySearchTerms").text("Search Results for \"" + sTerms + "\"");
   $("#displayList").attr("keywords", searchTerms);
+  var promoPath = "../images/" + searchTerms + "-promo.png";
+  $("#promo-img").attr("src",promoPath);
   return false;
 }
 
