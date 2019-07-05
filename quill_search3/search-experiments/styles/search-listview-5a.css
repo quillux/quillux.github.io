@@ -531,6 +531,13 @@ color: #0079bc;
   z-index: 90 !important;
 }
 
+.greenSave {
+  display: block;
+  float: right;
+  text-align: right;
+  width: 90px;
+  color: #009900;
+}
 
 .priceTiers {
   width: 220px;

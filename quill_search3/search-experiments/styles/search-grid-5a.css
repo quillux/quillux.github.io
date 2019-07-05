@@ -372,6 +372,14 @@ ul ul li.link {
    overflow: hidden;
 }
 
+.greenSave {
+  display: block;
+  float: right;
+  text-align: right;
+  width: 90px;
+  color: #009900;
+}
+
 .showPrices {
   position: absolute;
   width: 100%;
