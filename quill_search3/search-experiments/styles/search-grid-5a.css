@@ -162,6 +162,7 @@ ul ul li.link {
     padding-left: 200px;
 }
 
+/* ------ results block ------*/
 .search-grid-block {
    display: inline-block;
    position: relative;
@@ -180,12 +181,12 @@ ul ul li.link {
 
 .compareCheckBlock {
   margin: 0;
-  float: left;
+  float: right;
   font-size: .675em;
 }
 
 .compareCheck {
-  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .imgLink {
@@ -399,19 +400,19 @@ ul ul li.link {
 }
 
 .promoFlag {
-  margin: 0 0 0 0;
+  margin: -12px 0 0 -13px;
   width: 100px;
-  height: 25px;
+  height: 30px;
   display: inline-block;
   box-sizing: border-box;
-  float: right;
+  float: left;
   font-size: 18px;
   font-weight: normal;
-  padding-top: 3px;
+  padding-top: 5px;
   text-align: center;
   background-color: #ff6d70;
   color: #ffffff;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .saleFlag {
@@ -419,7 +420,7 @@ ul ul li.link {
 
 .bestPriceFlag {
   padding-top: 1px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .sale4Flag {
@@ -552,6 +553,7 @@ ul ul li.link {
    background-color: #eebf04;
    font-weight: bold;
 }
+
 
 .favListIcon {
   background: url(https://www.quill.com/Images/Quill/shared/lists/sprites.png?v=kv3VMncQ7xCs19gEYGFxlw) no-repeat no-repeat -61px -1440px;

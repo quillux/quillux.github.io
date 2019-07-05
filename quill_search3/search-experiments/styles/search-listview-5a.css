@@ -412,19 +412,22 @@ color: #0079bc;
 }
 
 .promoFlag {
-  margin: 0 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
   width: 100px;
-  height: 25px;
+  height: 30px;
   display: inline-block;
   box-sizing: border-box;
-  float: right;
   font-size: 18px;
   font-weight: normal;
-  padding-top: 3px;
+  padding-top: 5px;
   text-align: center;
   background-color: #ff6d70;
   color: #ffffff;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 10px;
+  z-index: 999;
 }
 
 .saleFlag {
@@ -432,7 +435,7 @@ color: #0079bc;
 
 .bestPriceFlag {
   padding-top: 1px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .sale4Flag {
@@ -619,6 +622,7 @@ color: #0079bc;
 .favListIcon:hover {
   background: url(https://www.quill.com/Images/Quill/shared/lists/sprites.png?v=kv3VMncQ7xCs19gEYGFxlw) no-repeat no-repeat -61px -1474px;
 }
+
 
 .subscribeLink {
   display: inline-block;
