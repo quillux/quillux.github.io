@@ -48,6 +48,8 @@ if((url == '') && (!searchString)) {
       $("#displayList").attr("keywords", searchString);
       $("#displaySearchTerms").text("Search Results for \"" + sTerms + "\"");
    }
+   var promoImgPath = "../images/" + searchString + "-promo.png";
+   $("#promo-img").attr("src",promoImgPath);
 
    scrapePage(url);
 } else {

@@ -41,7 +41,7 @@
   <div class="reorder">
     <div class="promoStrip">
       <b>Time to Reorder</b>
-      <img src="../images/reorder-strip.png" />
+      <img id="promo-img" src="../images/reorder-strip.png" />
     </div>
   </div>
 
@@ -165,8 +165,15 @@ function getQVar(variable)
 if (getQVar("keywords") != "") {
   searchTerms = getQVar("keywords");
   $("#displayGrid").attr("keywords", searchTerms);
+
+  var promoImgPath = "../images/" + searchTerms + "-promo.png";
+  $("#promo-img").attr("src",promoImgPath);
+
   var displayTerms = searchTerms.replace("-", " ");
   $("#displaySearchTerms").text("Search Results for \"" + displayTerms + "\"");
+
+
+
 }
 
 
