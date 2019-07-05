@@ -1,0 +1,747 @@
+<!doctype>
+<html>
+<head>
+
+
+<title>Quill: Test page</title>
+<!--
+<link type="text/css" rel="stylesheet" href="styles/common.css">
+<link type="text/css" rel="stylesheet" href="styles/Endeca~Endeca.css">
+-->
+<link type="text/css" rel="stylesheet" href="styles/search-listview-5a.css">
+<style type="text/css">
+
+
+</style>
+
+</head>
+<body>
+
+<header>
+  <img src="" />
+  <div id="newSearchBlock">
+    <label class="new_search" for="newSearch">Search: </label><input type="text" id="newSearch" />
+    <button id="doNewSearch" class="btnNewSearch">Search</button>
+  </div>
+</header>
+
+
+<div class="pageContent">
+<div id="pageTop">
+  <h2 id="displaySearchTerms">Search Results for "Copy Paper"</h2>
+  <div id="layoutSwitch">
+     <div id="displayList" title="list view" keywords=""></div><div id="displayGrid" title="grid view" keywords=""></div>
+  </div>
+</div>
+  <div id="filtersCol">
+    <h4>Filter the results</h4>
+
+
+  </div>
+  <div id="divResults">
+
+  </div>
+  <br clear="all" />
+</div>
+
+<footer>
+  <div class="footerContent">
+
+  </div>
+
+</footer>
+
+
+
+
+<div id="preLoader">
+    <div class="resultRow">
+      <div class="itemCol2">
+        <div class="line1 blockLoading blockLoad1200ms"></div>
+        <div class="line2 blockLoading blockLoad1200ms"></div>
+        <div class="line3 blockLoading blockLoad1200ms"></div>
+        <div class="line4 blockLoading blockLoad1200ms"></div>
+      </div>
+
+      <div class="itemCol3">
+        <div class="line5 blockLoading blockLoad1200ms"></div>
+        <div class="line6 blockLoading blockLoad1200ms"></div>
+        <div class="line7 blockLoading blockLoad1200ms"></div>
+      </div>
+
+      <div class="itemCol1">
+        <div class="imageBox blockLoading"></div>
+      </div>
+      <br clear="all" />
+    </div>
+    <div class="resultRow">
+      <div class="itemCol2">
+        <div class="line1 blockLoading blockLoad1200ms"></div>
+        <div class="line2 blockLoading blockLoad1200ms"></div>
+        <div class="line3 blockLoading blockLoad1200ms"></div>
+        <div class="line4 blockLoading blockLoad1200ms"></div>
+      </div>
+
+      <div class="itemCol3">
+        <div class="line5 blockLoading blockLoad1200ms"></div>
+        <div class="line6 blockLoading blockLoad1200ms"></div>
+        <div class="line7 blockLoading blockLoad1200ms"></div>
+      </div>
+
+      <div class="itemCol1">
+        <div class="imageBox blockLoading"></div>
+      </div>
+      <br clear="all" />
+    </div>
+    <div class="resultRow">
+      <div class="itemCol2">
+        <div class="line1 blockLoading blockLoad1200ms"></div>
+        <div class="line2 blockLoading blockLoad1200ms"></div>
+        <div class="line3 blockLoading blockLoad1200ms"></div>
+        <div class="line4 blockLoading blockLoad1200ms"></div>
+      </div>
+
+      <div class="itemCol3">
+        <div class="line5 blockLoading blockLoad1200ms"></div>
+        <div class="line6 blockLoading blockLoad1200ms"></div>
+        <div class="line7 blockLoading blockLoad1200ms"></div>
+      </div>
+
+      <div class="itemCol1">
+        <div class="imageBox blockLoading"></div>
+      </div>
+      <br clear="all" />
+    </div>
+</div>
+
+
+</body>
+<script src="../js/jquery-1.12.4.min.js"></script>
+
+
+<script type="text/javascript">
+
+// make a copy of the pre load blocks into the hidden preloader div
+document.getElementById("divResults").innerHTML = document.getElementById("preLoader").innerHTML;
+
+
+// set some defaults
+/* ------------------ set search path and term ----------------------*/
+/* ------------------------------------------------------------------*/
+/* ------------------------------------------------------------------*/
+/* ------------------------------------------------------------------*/
+//var urlPrefix = "https://www.quill.com/search?x=0&y=0&ajx=1&keywords=";
+//var searchTerms = "copy+paper";
+
+
+
+// default to local file for testing purposes
+//urlPrefix = "../../../quill-data1/search_copy-paper20180605.html";
+//searchTerms = "";
+
+var urlPrefix = "../search-experiments/data-src1/";
+var searchTerms = "copy-paper";
+
+
+
+function getQVar(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
+if (getQVar("keywords") != "") {
+  searchTerms = getQVar("keywords");
+  $("#displayGrid").attr("keywords", searchTerms);
+  var displayTerms = searchTerms.replace("-", " ");
+  $("#displaySearchTerms").text("Search Results for \"" + displayTerms + "\"");
+}
+
+
+var url = urlPrefix + searchTerms + ".html";
+
+
+// add function to set term to be something from searchbox or querystring
+var doSearch = document.getElementById("doNewSearch");
+var doSearchKey = document.getElementById("newSearch");
+var sTerms = "";
+
+// add click event to search btn
+doSearch.addEventListener("click", getSearch, false);
+
+// add enter key to input box
+doSearchKey.addEventListener("keyup", function (e) {
+ if (e.keyCode == 13 ) {
+  getSearch(e);
+ }
+});
+
+// executes search without reloading whole page
+function getSearch (event) {
+  sTerms = document.getElementById("newSearch").value;
+  console.log("terms: ]" + sTerms + "[");
+
+
+  searchTerms = sTerms.replace(" ", "-");
+  url = urlPrefix + searchTerms + ".html";
+
+
+  // display the preloader while we fetch the results
+  // make a copy of the pre load blocks into the hidden preloader div
+  document.getElementById("divResults").innerHTML = document.getElementById("preLoader").innerHTML;
+  document.getElementById("filtersCol").innerHTML = "";
+  // gets the resutls
+  scrapePage(url);
+  $("#displaySearchTerms").text("Search Results for \"" + sTerms + "\"");
+  $("#displayGrid").attr("keywords", searchTerms);
+  return false;
+}
+
+$("#displayGrid").on("click", function() {
+   var getKeywords =   $("#displayGrid").attr("keywords");
+   if (getKeywords != '') {
+     window.location.href = "search-grid-v5a.html?keywords=" + getKeywords;
+   } else {
+     window.location.href = "search-grid-v5a.html";
+   }
+});
+
+
+// use to wrap list items
+var divOpen = '<div class="bulletList">';
+var divQuickDelOpen = '<div class="quickDelivery">';
+var divClosed = '</div>';
+
+
+
+function scrapePage(url) {
+
+var loadPath = url;
+var getResults = $.get( loadPath, function( results ) {
+
+
+    // get the filters
+    filterBlock = $("#GuidedNavFilters", results).html();
+
+     // get the filters
+     var filtersRes = "<h4>Filter the Results</h4>";
+
+    //rewrite the image path for the quick ship filter
+     var quickShipRep = filterBlock.replace('/Images/Quill/Shared/QuickShip.png', '../images/icons/quick-ship-icn-gray1.svg');
+     filtersRes += quickShipRep;
+
+    $("#filtersCol").html(filtersRes);
+
+    $(function() {
+      stickyHeaders.load($(".NewSearchFilterLable"));
+    });
+
+    // create a new div for the results set
+    resultRows = '<div id="newResults">';
+
+    // we use the remove() function to pull out the chunk we need from the results
+    // the each function loops through all the rows
+
+    /* -------------------get the row by row results---------------------*/
+    /* ------------------------------------------------------------------*/
+
+    var searchRes = $(".BrowseItem", results).remove().each(function ( i, innerRow ) {
+
+        // initialize vars for all the product chunks for each row
+
+        var thisImg = "";
+        var thisRating = "";
+        var thisComp = "";
+
+        var thisPromo = "";
+        var thisDelivery = "";
+        var thisOwnBrnd = "";
+        var thisTitle = "";
+        var thisSkuNum = "";
+        var thisDesc = "";
+
+        var tableRows = "";
+        var thisPtable = "";
+        var qtyTier = [];
+        var thisPrice = [];
+        var thisQtyLmt = "";
+        var thisWasPrice = "";
+        var thisSave = [];
+        var thisCartAdd = "";
+        var thisUom = "";
+        var thisFav = "";
+        var thisSubscribe = "";
+        var thisCompPrint = "";
+        var thisLpo = "";
+
+
+/*
+               thisImg = checkThis($(".Img_Sku", innerRow).html());
+                   if (thisImg != '') {
+                   // load the result if it is not empty/undefined
+
+                      // replace the img src so it loads when viewed locally (this is not needed on the server)
+                      thisImg = thisImg.replace("//www.quill.com", "https://www.quill.com");
+
+                   }
+*/
+
+                   thisImg = checkThis($("#SkuPageMainImg", innerRow).attr('src'));
+                       if ((thisImg != '') && (thisImg != '/Images/shared/stardust.gif?v=mCLni2uxb7sYI1BUB4Di7A')) {
+                       // load the result if it is not empty/undefined
+
+                          // replace the img src so it loads when viewed locally (this is not needed on the server)
+                          console.log("img: " + thisImg);
+
+                          thisImg = "https:" + thisImg;
+
+                      // we have to find the images that are being lazy loaded
+                       } else if (thisImg == '/Images/shared/stardust.gif?v=mCLni2uxb7sYI1BUB4Di7A') {
+                         // the image path is in the data-src instead
+                          thisImg = checkThis($("#SkuPageMainImg", innerRow).attr('data-src'));
+                          thisImg = "https:" + thisImg;
+                       } else {
+                         // empty image
+                         // we should put an image not available here
+
+                       }
+
+
+               // get sku title
+               thisTitle = checkThis($("#skuName", innerRow).html());
+
+               // get sku ratings
+               thisRating = checkThis($(".snippetRating", innerRow).html());
+
+               // need to extract the item number
+               thisSkuNum = '<span class="iNumber">' + checkThis($(".iNumber", innerRow).remove().html()) + '</span>';
+
+               // get compare
+               thisComp = checkThis($(".ItemCompare", innerRow).html());
+
+               // get sku bullets
+               thisDesc = divOpen + checkThis($(".skuBrowseBullets", innerRow).html()) + divClosed;
+
+               // get subscribe link
+               thisSubscribe = checkThis($(".itemDetails > a", innerRow).attr("href"));
+
+                   if (thisSubscribe != '') {
+                      // load the result
+                     thisSubscribe = '<br /><a class="subscribeLink" href="https://www.quill.com' + thisSubscribe + '">Subscribe</a>';
+                   }
+
+
+                // get LPO link - .ownBrandSuggestionLink
+               thisLpo = checkThis($(".ownBrandSuggestionLink", innerRow).html());
+
+                   if (thisLpo != '') {
+                      // load the result
+                      thisLpo = '<div class="ownBrandLPO">' + thisLpo + '</div>';
+                   }
+
+
+               // get sku promoImg
+               thisPromo = checkThis($(".promoImage", innerRow).html());
+
+                   // promo flag
+                   if (thisPromo != "") {
+                     var promoImgPath = thisPromo;
+                     var promoClass, promoText;
+
+                     if(promoImgPath.indexOf("sale") > 0) {
+                        promoClass = "saleFlag";
+                        promoText = "Sale";
+                     } else if(promoImgPath.indexOf("bestprice") > 0) {
+                       promoClass = "bestPriceFlag";
+                       promoText = "Top Seller<br />Best Price";
+                     } else if(promoImgPath.indexOf("event2") > 0) {
+                       promoClass = "sale4Flag";
+                       promoText = "$4 Sale";
+                     } else if(promoImgPath.indexOf("closeout") > 0) {
+                       promoClass = "clearanceFlag";
+                       promoText = "Clearance";
+                     } else if(promoImgPath.indexOf("free") > 0) {
+                       promoClass = "specialFlag";
+                       promoText = "Special Offer";
+                     } else if(promoImgPath.indexOf("quillplus") > 0) {
+                       promoClass = "qpFlag";
+                       promoText = "Quill<b>PLUS</b>";
+                     } else if(promoImgPath.indexOf("private") > 0) {
+                       promoClass = "privateFlag";
+                       promoText = "Private Sale";
+                     }
+
+
+                      thisPromo = '<div class="promoFlag ' + promoClass + '">' + promoText + '</div>';
+                   }
+
+
+
+               // get quick delivery
+               thisDelivery = checkThis($(".quickShip", innerRow).html());
+                   if (thisDelivery != '') {
+                     // wrap the delivery
+                     thisDelivery = divQuickDelOpen + thisDelivery + divClosed;
+                   }
+
+
+               // get lifetime block
+               thisOwnBrnd = checkThis($(".hdnListView", innerRow).html());
+                   if (thisOwnBrnd != "") {
+                     // rewrap it the manual way because we can't get f'ing wrap to work
+                      thisOwnBrnd = '<div class="ownBrand hdnListView">' + thisOwnBrnd + '</div>';
+                   }
+
+
+               // get cart add
+               thisCartAdd = checkThis($(".addToCartSec", innerRow).html());
+
+
+               // get fav list
+               thisFav = checkThis($(".favListDiv", innerRow).html());
+
+
+               // get uom
+               thisUom = checkThis($(".UOM", innerRow).html());
+
+               // get savingStory
+               thisWasPrice = checkThis($(".savingStory", innerRow).html());
+                   if (thisWasPrice != "") {
+                     // rewrite the savings story to one line
+                     var thisWasStory = $(".txtSaveStory", this.innerHTML).remove();
+                     var thisWasTop = 'Was <span class="strike darkGray">' + $(".strike", this.innerHTML).remove().text() + '</span><br />';
+                     var thisWasSavings = "";
+                     //var thisWasSavings = '<span class="green txtBold"> Save up to ' + $(".txtSavedPrice", this.innerHTML).remove().text() + '</span>';
+
+                      // load the result
+                      thisWasPrice = thisWasTop + thisWasSavings + "<!-- thiswasprice row " + i + "-->";
+                }
+
+               // get qty Limit quantitylmt
+               thisQtyLmt = checkThis($(".quantitylmt", innerRow).html());
+                   if (thisQtyLmt != undefined) {
+                      //thisQtyLmt = '<br />' + thisQtyLmt;
+                   }
+
+               // get singleton price
+                var thisPrice2 = checkThis($(".price", innerRow).html());
+                   if (thisPrice2 != "") {
+                      // start clean
+                     tableRows = "";
+
+                     // tier starts at 1
+                     var topTier = "1 " + thisUom;
+
+                     tableRows += '<tr>';
+                             tableRows += '<td class="qtyCol">' + topTier + '</td>';
+                             tableRows += '<td class="savingsCol"><span class="bigSavings">' + thisWasPrice + '</span></td>';
+                             tableRows += '<td class="bestPrice"><span class="priceupdate">' + thisPrice2 + '</span></td>';
+                     tableRows += '</tr>';
+
+                   }
+
+               // console.log("price: " + tableRows);
+               // get pricing table if any and override single price
+
+
+              var thisPtable2 = checkThis($(".purBreak", innerRow).html());
+              if( thisPtable2 != "") {
+
+                // reset the table rows
+                tableRows = "";
+
+                // get the number of tds to tell us how many tiers there are
+                var tdCount2 = $("tr", thisPtable2).children("td").length;
+
+                //console.log("td count: " + tdCount2);
+
+                 // set count defaults for  2 tiers (9 tds)
+                 var qCount = 2;
+                 var sCount = 8;
+                 var pCount = 5;
+
+                 if (tdCount2 == 12) {
+                     qCount = 3;
+                     sCount = 11;
+                     pCount = 7;
+
+                  } else if (tdCount2 == 15) {
+                     qCount = 4;
+                     sCount = 14;
+                     pCount = 9;
+
+                  } else if (tdCount2 == 18) {
+                     qCount = 5;
+                     sCount = 17;
+                     pCount = 11;
+
+                  }
+
+                 var qtyTier2 = [];
+                 var priceTier2 = [];
+                 var saveTier2 = [];
+
+                 for (z=(qCount-1); z >= 0; z--) {
+                     qtyTier2[z] = $("tr", thisPtable2).children("td").eq(qCount).text().trim();
+                     saveTier2[z] = $("tr", thisPtable2).children("td").eq(sCount).text().trim();
+                     priceTier2[z] = $("tr", thisPtable2).children("td").eq(pCount).text().trim();
+
+
+                     qCount--;
+                     sCount--;
+                     pCount--;
+
+                     // put everything into a new table
+                     if (z == (qtyTier2.length-1)) {
+                      priceTier2[z] = '<span class="priceupdate">' + priceTier2[z] + '</span>';
+                     }
+
+                     if ((z == (qtyTier2.length-1)) && (thisWasPrice != "")) {
+                        saveTier2[z] = '<span class="bigSavings">' + thisWasPrice + '</span>';
+                     } else if (saveTier2[z] != "") {
+                        saveTier2[z] = '<span class="green savings">You save ' + saveTier2[z] + '</span>';
+                     }
+
+                     tableRows += '<tr>';
+                            if(qtyTier2[z] === "1"){
+                             tableRows += '<td class="qtyCol">' + qtyTier2[z] + ' ' + thisUom + '</td>';
+                            } else {
+                             tableRows += '<td class="qtyCol">' + qtyTier2[z] + '+</td>';
+                           }
+                             tableRows += '<td class="savingsCol">' + saveTier2[z] + '</td>';
+                             tableRows += '<td class="bestPrice">' + priceTier2[z] + '</td>';
+                     tableRows += '</tr>';
+
+                 }
+
+               }
+
+
+     /* -----------------------------------------------------*/
+     /* --------------------- output rows -------------------*/
+     /* -----------------------------------------------------*/
+     /* -----------------------------------------------------*/
+
+
+     // we will push the vars into an html block for each row
+      resultRows += '<div class="resultRow">';
+        resultRows += thisPromo + "";
+        resultRows += '<div class="imgCol">\n';
+          resultRows += '<img src="' + thisImg + '" class="skuImg" />\n';
+          resultRows += thisComp + "\n";
+        resultRows += '</div>\n';
+
+        resultRows += '<div class="detailsCol">\n';
+          resultRows += thisTitle + "\n";
+          resultRows += thisSkuNum + "\n";
+          resultRows += thisRating + '\n<br clear="all"/>';
+          resultRows += thisDelivery + "\n";
+          resultRows += thisOwnBrnd + '\n<br clear="all"/>';
+          resultRows += thisDesc + "\n";
+          resultRows += thisLpo + "\n";
+          resultRows += '</div>\n';
+
+        resultRows += '<div class="priceCol">\n';
+
+          // pricing table
+
+            resultRows += '<table class="priceTiers" border="0" cellpadding="0" cellspacing="0">';
+               resultRows += '<tr>';
+                 resultRows += '<th class="UOM" colspan="3">';
+                 resultRows += '<span class="uomText">Price when you buy</span>';
+                 resultRows += '</th>';
+               resultRows += '</tr>'
+            resultRows += tableRows;
+            resultRows += '</table>';
+
+
+          resultRows += '<div class="add2cartBlock">\n';
+          resultRows += thisCartAdd + "\n";
+          resultRows += thisFav + "\n\n\n";
+          resultRows += thisSubscribe + "\n";
+          resultRows += '</div>';
+        resultRows += '</div>\n';
+
+      // end result row
+      resultRows += '<br clear="all" /></div>\n';
+
+
+
+    });
+
+    // close the overall div
+    resultRows += '</div>\n\n';
+
+
+    // console.log("search: " + resultRows);
+
+
+    // when we get done assign the results to our divResults display
+    $("#divResults").html(resultRows);
+
+
+    // get the product recommendations
+        var thisProdRec = "";
+        var recImg = "";
+        var recTitle = "";
+        var recSave = "";
+        var recPrice = "";
+        var recAddCart = "";
+        var newRec = "";
+
+
+    prodRecs = $("#VerticalCarousel .itemSku", results).remove().each(function( l ){
+        thisProdRec = this.innerHTML;
+
+
+
+        if (thisProdRec != undefined) {
+         // load the result if it is not empty/undefined
+
+
+            // lets get the pieces we want and reassemble
+            recImg = $("#SkuPageMainImg", thisProdRec).parent().html();
+            recTitle = $(".desc2", thisProdRec).html();
+            recPrice = $(".price", thisProdRec).html();
+            recAddCart = $(".wrp-addToCart", thisProdRec).html();
+            // replace the img src so it loads when viewed locally (this is not needed on the server)
+            newRec += '<div class="itemb">' + recImg.replace(/\/\/www.quill.com/g, "https://www.quill.com")  + '<!-- item-' + l + '-->\n\n';
+            newRec += '<div class="recTitle">' + recTitle + '</div>';
+            newRec += '<div class="recPrice">' + recPrice + '</div>';
+
+            newRec += '<div class="recAddCart">' + recAddCart + '</div>';
+
+            newRec += '</div>\n\n';
+
+
+
+
+         } else {
+           // add an empty block
+           // console.log("last now here");
+           newRec += '<!-- no rec item ' + l + '-->';
+         }
+
+        //recImg += recImg + "No shit sherlock";
+
+
+    });
+
+    // console.log("and now here-recImg "  + newRec);
+    if (thisProdRec != undefined) {
+      // insert and unhide the prod recs block
+      $("#productRecs").html('<h3>Quill Best Sellers</h3><div id="recBar">' + newRec + '</div></div>');
+      $("#productRecs").removeClass("hideThis");
+    } else {
+      if (!$("#productRecs").hasClass("hideThis")) {
+        $("#productRecs").addClass("hideThis");
+      }
+    }
+
+
+})
+.done(function(results) {
+    // do nothing
+})
+.fail(function(results) {
+    // tell me what went wrong
+     console.log(results);
+     console.log(results.status);
+     console.log(results.response);
+});
+
+} // end scrape page
+
+
+function checkThis (thisVal) {
+   if (thisVal != undefined) {
+      // return the result
+      return thisVal;
+   } else {
+     // return empty comment
+      return '';
+   }
+}
+
+// execute a result for first time loading
+scrapePage(url);
+
+
+// this makes headings sticky
+// it is invoked in the js file in the done section for the scrapepage
+var stickyHeaders = (function() {
+
+  var $window = $(window),
+      $stickies;
+
+  var load = function(stickies) {
+
+    if (typeof stickies === "object" && stickies instanceof jQuery && stickies.length > 0) {
+
+      $stickies = stickies.each(function() {
+
+        var $thisSticky = $(this).wrap('<div class="followWrap" />');
+
+        $thisSticky
+            .data('originalPosition', $thisSticky.offset().top)
+            .data('originalHeight', $thisSticky.outerHeight())
+              .parent()
+              .height($thisSticky.outerHeight());
+      });
+
+      $window.off("scroll.stickies").on("scroll.stickies", function() {
+		  _whenScrolling();
+      });
+    }
+  };
+
+  var _whenScrolling = function() {
+
+    $stickies.each(function(i) {
+
+      var $thisSticky = $(this),
+          $stickyPosition = $thisSticky.data('originalPosition');
+
+      if ($stickyPosition <= $window.scrollTop()) {
+
+        var $nextSticky = $stickies.eq(i + 1),
+            $nextStickyPosition = $nextSticky.data('originalPosition') - $thisSticky.data('originalHeight');
+
+        $thisSticky.addClass("fixed");
+
+        if ($nextSticky.length > 0 && $thisSticky.offset().top >= $nextStickyPosition) {
+
+          $thisSticky.addClass("absolute").css("top", $nextStickyPosition);
+        }
+
+      } else {
+
+        var $prevSticky = $stickies.eq(i - 1);
+
+        $thisSticky.removeClass("fixed");
+
+        if ($prevSticky.length > 0 && $window.scrollTop() <= $thisSticky.data('originalPosition') - $thisSticky.data('originalHeight')) {
+
+          $prevSticky.removeClass("absolute").removeAttr("style");
+        }
+      }
+    });
+  };
+
+  return {
+    load: load
+  };
+})();
+
+
+
+
+</script>
+
+
+</html>
