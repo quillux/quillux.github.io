@@ -1345,7 +1345,7 @@ function noListRules() {
 		$(".toggle-btn").addClass('disable-check');
 		$(".listItem").addClass('disable-list-rules');
 		$(".listItemStatus").addClass('disable-list-rules');
-		$("#createList").addClass('disable-list-rules');
+		$("#createList").hide();
 
 		// disable click
    $('.cb-value').off("click", toggleListCheck);
@@ -1356,7 +1356,7 @@ function noListRules() {
 		$(".listItem div").removeClass('disable-check');
 		$(".listItem").removeClass('disable-list-rules');
 		$(".listItemStatus").removeClass('disable-list-rules');
-		$("#createList").removeClass('disable-list-rules');
+		$("#createList").show();
 		//enable click
    $('.cb-value').on("click", toggleListCheck);
    // need to check number of lists to either show or not the scroll link
