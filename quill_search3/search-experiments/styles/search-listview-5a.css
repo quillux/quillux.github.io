@@ -219,6 +219,10 @@ ul ul li.link {
   overflow: hidden;
 }
 
+.promoTitle {
+  display: block;
+}
+
 /*------- product results ------*/
 #divResults {
   display: inline-block;

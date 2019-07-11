@@ -157,20 +157,31 @@ ul ul li.link {
   text-indent: -18px;
 }
 
+/* promostrip */
 .reorder {
-  display: block;
-  margin-left: -200px;
-  padding-left: 200px;
+  display: inline-block;
+  float: left;
+  width: 100%;
+  margin-left: -265px;
+  padding-left: 265px;
 }
 
 .promoStrip {
   display: block;
-  margin: 0 1em 20px 0;
-  padding: 10px;
+  position: relative;
+  width: 100%;
+  min-width: 770px;
+  margin: 0 0 1em 0;
+  padding: 20px 10px 10px 10px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);  
   overflow: hidden;
+}
+
+.promoTitle {
+  display: block;
 }
 
 #jsonResults {
