@@ -893,6 +893,10 @@
 								  color: #009900;
 							}
 
+
+              /* css modified from codepen by Nikhil Krishnan
+              / https://codepen.io/nikhil8krishnan/pen/eNVZgB/ */
+
 							.toggle-btn {
 								width: 45px;
 								height: 25px;
@@ -934,7 +938,6 @@
 									left: 23px;
 								}
 
-
 								.cb-value {
 									position: absolute;
 									left:0;
@@ -946,6 +949,10 @@
 									cursor:pointer;
 									-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 								}
+
+                /* end css modified from codepen by Nikhil Krishnan
+                / https://codepen.io/nikhil8krishnan/pen/eNVZgB/ */
+
 
 
 								.disable-check {
@@ -1159,13 +1166,13 @@ var myLists = {
 
 		 formatLists();
 
+/* modified from codepen by Nikhil Krishnan
+/ https://codepen.io/nikhil8krishnan/pen/eNVZgB/ */
+
 function toggleListCheck() {
   var mainParent = $(this).parent('.toggle-btn');
   // var selectedText = $(this).find("option").filter(":selected").text();
 	var getStatusSpan = mainParent.parent('.listItem').children('.listItemStatus');
-
-	console.log("node: " + JSON.stringify(getStatusSpan));
-  console.log("node2: " + JSON.stringify(mainParent));
 
   if($(mainParent).find('input.cb-value').is(':checked')) {
 
