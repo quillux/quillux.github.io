@@ -8,12 +8,15 @@ This uses the $.get function of Jquery
 There is a parseTheApi function called in the .done section to
 ensure the results have been returned
 
-The parsetheApi needs to be implemented in the file the scrape page function is called
+The parsetheApi is implemented in the file that the scrape page function is called
 
 added code to make the prototype work locally with no CORS restrictions
 now pulls data from local data-src1 directory
 
 */
+
+// initialize scripts
+var url = '';
 
 function getQVar(variable)
 {
