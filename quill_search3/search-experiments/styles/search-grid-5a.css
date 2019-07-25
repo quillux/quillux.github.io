@@ -22,6 +22,7 @@ header {
   width: 50%;
   min-width: 500px;
   height: 40px;
+  border-radius: 20px;
   background-color: #ffffff;
   margin-left: 250px;
   padding-left: 10px;
@@ -53,8 +54,9 @@ header {
   float: right;
   margin: 5px 5px 0 0;
   border: none;
-  background-color: #ffcc00;
+  background-color: #ffffff;
   height: 30px;
+  cursor: pointer;
 }
 
 .pageContent {

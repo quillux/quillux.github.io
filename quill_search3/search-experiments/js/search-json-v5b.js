@@ -447,6 +447,7 @@ function scrapePage(url) {
 
           $("#filtersCol").html(filtersRes);
 
+          // this makes the filter headers sticky
           $(function() {
             stickyHeaders.load($(".NewSearchFilterLable"));
           });
