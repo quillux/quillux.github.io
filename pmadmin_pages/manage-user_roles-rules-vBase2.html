@@ -1015,12 +1015,12 @@
 
 
            <div id="listRules" class="setListRules">
-           <h3 class="h3-listRules">Cancel rules for company lists <span class="ICO icoQ toolTip" title="What's this?" id="CompanyListMsg"></span></h3>
+           <h3 class="h3-listRules">Company Lists <span class="ICO icoQ toolTip" title="What's this?" id="CompanyListMsg"></span></h3>
            <div id="toolTip-box">
              <div title="close tooltip" class="close-icn">X</div>
            Company lists can be created and managed using the My Lists under the Find Products group within the My Account section of this site. You can add items to a list by pressing the heart icon next to the Add to Cart button of a product when searching or viewing details.
            </div>
-           <p>Lists can be set to allow purchasing with no approval and no limits</p>
+           <p>Items on active lists can be purchased without approval and are not affected by other rules set on this page.</p>
 
 						 <div id="listLists" class="myLists">
 
@@ -1278,7 +1278,7 @@ function noListRules() {
                 <span class="radioSpan radnotCheck">
                     <input data-val="true" data-val-number="The field ApprovalType must be a number." data-val-required="The ApprovalType field is required." id="rdNoApprovlRqrd" name="ApprovalType" onchange="enableLimitAndAppvr('','Enable');noListRules();" type="radio" value="1" />
                 </span>
-                <label class="formLabel" for="rdAllRqstAprvl">Does NOT require approval (can purchase directly)</label>
+                <label class="formLabel" for="rdAllRqstAprvl">Does NOT Require Approval (can purchase without restriction)</label>
             </div>
             <div class="formRow SB_l routeAll ">
                 <span class="radioSpan radnotCheck">
@@ -1291,7 +1291,7 @@ function noListRules() {
                 <span class="radioSpan radnotCheck">
                     <input checked="checked" id="rdAprvlWLimit" name="ApprovalType" onchange="enableLimitAndAppvr('','Enable');noListRules();" type="radio" value="3" />
                 </span>
-                <label class="formLabel" for="rdAprvlWLimit">Requires approval by limit(s):</label>
+                <label class="formLabel" for="rdAprvlWLimit">Route Requests Outside Order Limits (within limits won’t require approval):</label>
                 <div class="marginLeft" style="margin-left: 30px">
                     <label class="ifrequiredoptional"></label>
                 </div>
@@ -1334,7 +1334,7 @@ function noListRules() {
                 <span class="formLabel"><label class="notRequiredSymbol" for="Approver" id="reqApprover">&nbsp;</label><label for="Approver" id="lblApprover">Route this user through an approval group:</label></span>
             </h2>
             <p class="SearchName formLabel form8 L SL_l apprvlGrp">
-                <select class="selectbox form9" data-error-elementname="ApprovalType" data-val="true" data-val-ifrequired="This new user is a member of the only approval group for this account. Please create a new approval group for this new user to be a member of or select &quot;Does NOT require approval (can purchase directly)&quot;." data-val-ifrequired-name="ApprovalType" data-val-ifrequired-regexvalue="" data-val-ifrequired-triggervalidation="True" data-val-ifrequired-value="" data-val-ifrequired-values="2,3" id="Approver" name="Approver" type="selectlist"><option value="OwLtiw7bQFlDmvgl14zdO28M3KmYiXZeqCtvjOucjCV7fVEXwuqvxsyDmclrPzrhRWh8yfidgYWFMGyt9_ujrg~~">Another approval group</option>
+                <select class="selectbox form9" data-error-elementname="ApprovalType" data-val="true" data-val-ifrequired="This new user is a member of the only approval group for this account. Please create a new approval group for this new user to be a member of or select &quot;Does NOT Require Approval (can purchase without restriction)&quot;." data-val-ifrequired-name="ApprovalType" data-val-ifrequired-regexvalue="" data-val-ifrequired-triggervalidation="True" data-val-ifrequired-value="" data-val-ifrequired-values="2,3" id="Approver" name="Approver" type="selectlist"><option value="OwLtiw7bQFlDmvgl14zdO28M3KmYiXZeqCtvjOucjCV7fVEXwuqvxsyDmclrPzrhRWh8yfidgYWFMGyt9_ujrg~~">Another approval group</option>
 <option value="pLfb1d4iiMitdwufXsl2nZIeN4RdJFDgUWVKvuvhAu_gCuHLRl1kkQhiugZA497mIhw2unvvZqrj-mD0Adgd9g~~">district13</option>
 <option selected="selected" value="w7rFmTjQcrcX5JYsuJXfgYabqgEKbsYD8xrpIRPwGpEUGYR4E3WZJJuU8NeBeZogUfcRjLm8iKgXDlxDT-JMtA~~">M. Murphy</option>
 </select>
