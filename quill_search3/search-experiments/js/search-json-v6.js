@@ -23,6 +23,9 @@ var filtersRes;
 // get keywards from query string if any
 var searchString = getQVar("keywords");
 
+// get search box field elements
+var doSearch = document.getElementById("doNewSearch");
+var doSearchKey = document.getElementById("newSearch");
 
 // add click event to search btn
 doSearch.addEventListener("click", getSearch, false);
@@ -38,8 +41,6 @@ doSearchKey.addEventListener("keyup", function (e) {
 function getSearch (event) {
 
   // set term to be something from searchbox or querystring
-  var doSearch = document.getElementById("doNewSearch");
-  var doSearchKey = document.getElementById("newSearch");
   var sTerms = "";
 
   sTerms = document.getElementById("newSearch").value;
@@ -75,7 +76,7 @@ function getQVar(variable)
        return(false);
 }
 
-
+// check for url or query string
 if((url == '') && (!searchString)) {
   url = "../search-experiments/data-src1/copy-paper.html";
 
@@ -102,8 +103,10 @@ if((url == '') && (!searchString)) {
 
 }
 
+// get html on initial page load
 getHTML(url);
 
+// this is called by the initial page load or the search
 function getHTML(url) {
     // this retrieves the page
     var getResults = $.get( url, function( results ) {
@@ -112,17 +115,21 @@ function getHTML(url) {
     })
     .done(function(results) {
 
-          buildSearchJSON(results);
+      buildSearchJSON(results);
 
-             // check if it has a results block
+          // check if it has a results block
           var checkSearch = $("#SKUDetailsDiv", results).text();
+
           if ((checkSearch === "") || (checkSearch === undefined)) {
+
+              // this function gets implemented in the parent html
               parseTheApi("");
-              //document.write("no results");
-              //document.close();
+
+              console.log(results);
 
           } else {
 
+             // this function gets implemented in the parent html
               parseTheApi(jsonContent);
 
               $("#filtersCol").html(filtersRes);
@@ -132,20 +139,18 @@ function getHTML(url) {
                 stickyHeaders.load($(".NewSearchFilterLable"));
               });
 
-              //document.write(jsonContent);
-              //document.close();
-
           }
-          console.log(results);
     })
     .fail(function(results) {
         // tell me what went wrong
          console.log(results);
          console.log(results.status);
          console.log(results.response);
-});
+    });
 }
 
+
+// format content from html into a json
 function buildSearchJSON(pageContent) {
 
   // start a new json object
@@ -199,7 +204,7 @@ function buildSearchJSON(pageContent) {
                  // load the result if it is not empty/undefined
 
                     // replace the img src so it loads when viewed locally (this is not needed on the server)
-                    console.log("img: " + imgPath);
+                    console.warn("img: " + imgPath);
 
                     imgPath = "https:" + imgPath;
 
@@ -497,7 +502,7 @@ function buildSearchJSON(pageContent) {
     filtersRes = "<h4>Filter the Results</h4>";
 
     // this grabs the whole column of filters
-    var filterBlob = $("#GuidedNavFilters", results).html();
+    var filterBlob = $("#GuidedNavFilters", pageContent).html();
 
     //rewrite the image path for the quick ship filter
     var quickShipRep = filterBlob.replace('/Images/Quill/Shared/QuickShip.png', '../images/icons/quick-ship-icn-gray1.svg');
