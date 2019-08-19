@@ -6,8 +6,6 @@ It can override a base href so that links to other local files will work
 use :
 <a href="javascript:getLocalPath('245_filter_applied.html');">
 
-should make a version to rewrite image paths
-
 */
 
 function getLocalPath (linkName) {
@@ -18,7 +16,7 @@ function getLocalPath (linkName) {
     var arrPath = filePath.split("/");
     var arrLength = arrPath.length;
 
-    // get this file name
+    // get the parent file name
     var fileName = arrPath[arrLength - 1];
 
     // replace the file name with the file to link

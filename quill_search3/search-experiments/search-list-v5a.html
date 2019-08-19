@@ -197,6 +197,7 @@ function getSearch (event) {
   document.getElementById("filtersCol").innerHTML = "";
   // gets the resutls
   scrapePage(url);
+  
   $("#displaySearchTerms").text("Search Results for \"" + sTerms + "\"");
   $("#displayGrid").attr("keywords", searchTerms);
   return false;

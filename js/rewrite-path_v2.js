@@ -12,7 +12,7 @@ for( i=0; i<(arrLength-1); i++ ) {
   newPath += arrPath[i] + "/";
 }
 
-// rewraite A tags that have "file:///" as part of the link text
+// rewrite A tags that have "file:///" as part of the link text
 var arrAtags = document.getElementsByTagName("a");
  for ( z=0; z < arrAtags.length; z++ ) {
      var rePath = arrAtags[z].href;
