@@ -1,16 +1,15 @@
 
 
-// set some defaults
 /*
-This function is used in conjunction with an html page to return
+This script is used in conjunction with an html page to return
 search results by scraping the existing live production site
-This uses the $.get function of Jquery
-There is a parseTheApi function called in the .done section to
-ensure the results have been returned
+This uses the $.get function of Jquery and converting it to JSON
+By using JSON we can then format the results into a variety of ways
+including a list view, grid view, cards, and ribbons
 
 if page cannot be parsed or CORS restriction prevents the access
-added code to make the prototype work locally with no CORS restrictions
-and pulls data from local data-src1 directory
+then it will access saved html search result page files locally with no CORS restrictions
+Static pages are pulled from local data-src1 directory
 
 */
 
@@ -20,7 +19,7 @@ var jsonContent = new Object();
 var localData;
 var filtersRes;
 
-// get keywards from query string if any
+// get keywords from query string if any
 var searchString = getQVar("keywords");
 
 // get search box field elements
@@ -65,8 +64,7 @@ function getSearch (event) {
 }
 
 // check if there are keywords on the url string
-function getQVar(variable)
-{
+function getQVar(variable) {
        var query = window.location.search.substring(1);
        var vars = query.split("&");
        for (var i=0;i<vars.length;i++) {
@@ -82,8 +80,10 @@ if((url == '') && (!searchString)) {
 
 } else if (searchString != '') {
 
+   // hyphenate the term so that we can use for the path
    var sTerms = searchString.replace("-", " ");
 
+   // get local files
    if (searchString === "copy-paper") {
       url = "../search-experiments/data-src1/copy-paper.html";
    } else if (searchString === "laptops") {
@@ -106,7 +106,7 @@ if((url == '') && (!searchString)) {
 // get html on initial page load
 getHTML(url);
 
-// this is called by the initial page load or the search
+// this is called by the initial page load or by the search
 function getHTML(url) {
     // this retrieves the page
     var getResults = $.get( url, function( results ) {
@@ -115,21 +115,24 @@ function getHTML(url) {
     })
     .done(function(results) {
 
-      buildSearchJSON(results);
 
           // check if it has a results block
           var checkSearch = $("#SKUDetailsDiv", results).text();
 
           if ((checkSearch === "") || (checkSearch === undefined)) {
 
-              // this function gets implemented in the parent html
+              // there were no search formatted results
               parseTheApi("");
 
+              // what did we get
               console.log(results);
 
           } else {
 
-             // this function gets implemented in the parent html
+              // builds the JSON so that we can then format it as needed for the layout
+              buildSearchJSON(results);
+
+              // this function gets implemented in parse json js file
               parseTheApi(jsonContent);
 
               $("#filtersCol").html(filtersRes);
@@ -145,7 +148,7 @@ function getHTML(url) {
         // tell me what went wrong
          console.log(results);
          console.log(results.status);
-         console.log(results.response);
+         console.warn(results.response);
     });
 }
 
